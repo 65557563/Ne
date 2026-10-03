@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgG" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#064e3b"/>
+      <stop offset="100%" stop-color="#022c22"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#bgG)"/>
+  
+  <rect x="40" y="40" width="720" height="420" rx="20" fill="none" stroke="#10b981" stroke-width="3" stroke-dasharray="10 8"/>
+  
+  <!-- Camera icon -->
+  <g transform="translate(350, 140)">
+    <circle cx="50" cy="50" r="45" fill="#047857"/>
+    <path d="M25 40 L35 25 L65 25 L75 40 L85 40 A5 5 0 0 1 90 45 L90 75 A5 5 0 0 1 85 80 L15 80 A5 5 0 0 1 10 75 L10 45 A5 5 0 0 1 15 40 Z" fill="#34d399"/>
+    <circle cx="50" cy="58" r="16" fill="#064e3b" stroke="#ffffff" stroke-width="3"/>
+  </g>
+  
+  <text x="400" y="280" font-family="system-ui, sans-serif" font-size="24" font-weight="900" fill="#ffffff" text-anchor="middle">
+    DOSSIER PHOTOS DE TERRAIN
+  </text>
+  <text x="400" y="315" font-family="system-ui, sans-serif" font-size="15" fill="#6ee7b7" text-anchor="middle">
+    Répertoire prêt à l'emploi : Déposez vos photos (.jpg, .png, .webp)
+  </text>
+  <text x="400" y="345" font-family="system-ui, sans-serif" font-size="13" fill="#cbd5e1" text-anchor="middle">
+    Nommez vos fichiers : pepiniere_[id].jpg ou pepiniere_[nom].jpg
+  </text>
+
+  <rect x="220" y="380" width="360" height="40" rx="20" fill="#10b981" fill-opacity="0.2" stroke="#34d399" stroke-width="1.5"/>
+  <text x="400" y="405" font-family="monospace" font-size="13" font-weight="bold" fill="#34d399" text-anchor="middle">
+    /assets/pepinieres/votre_image.jpg
+  </text>
+</svg>

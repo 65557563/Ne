@@ -1,0 +1,6 @@
+{
+  "name": "BENIN-PEPI - Géoportail des Pépinières du Bénin",
+  "description": "Système d'information géographique et géoportail cartographique des pépinières écoles et privées du Département du Zou et de la commune d'Abomey au Bénin.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

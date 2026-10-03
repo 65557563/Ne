@@ -1,0 +1,186 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    background-color: #f8fafc;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.ol-popup {
+    position: absolute;
+    background-color: white;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.25), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
+    padding: 18px 20px;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+    bottom: 14px;
+    left: -50px;
+    min-width: 280px;
+    max-width: 360px;
+    font-size: 13px;
+    z-index: 1000;
+}
+
+.ol-popup:after, .ol-popup:before {
+    top: 100%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+.ol-popup:after {
+    border-top-color: white;
+    border-width: 10px;
+    left: 48px;
+    margin-left: -10px;
+}
+
+.ol-popup:before {
+    border-top-color: #cbd5e1;
+    border-width: 11px;
+    left: 48px;
+    margin-left: -11px;
+}
+
+.ol-popup-closer {
+    text-decoration: none;
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    width: 24px;
+    height: 24px;
+    line-height: 22px;
+    text-align: center;
+    border-radius: 50%;
+    background-color: #f1f5f9;
+    color: #475569;
+    font-weight: bold;
+    font-size: 14px;
+    transition: all 0.15s ease;
+}
+
+.ol-popup-closer:hover {
+    background-color: #e2e8f0;
+    color: #0f172a;
+}
+
+.ol-popup-closer:after {
+    content: "✖";
+}
+
+.popup-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+}
+
+.popup-table th {
+    text-align: left;
+    color: #64748b;
+    font-weight: 600;
+    font-size: 11px;
+    padding: 4px 6px 4px 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.popup-table td {
+    color: #0f172a;
+    font-size: 12px;
+    padding: 4px 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.popup-header-title {
+    font-size: 15px;
+    font-weight: 800;
+    color: #064e3b;
+    margin: 0 0 6px 0;
+    padding-right: 20px;
+}
+
+.popup-tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 9999px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.tag-ecole {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.tag-privee {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.ol-control {
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: blur(8px);
+    border-radius: 12px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+    padding: 3px !important;
+}
+
+.ol-control button {
+    background-color: #ffffff !important;
+    color: #1e293b !important;
+    border-radius: 8px !important;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.ol-control button:hover {
+    background-color: #f1f5f9 !important;
+}
+
+.qgis2web-badge {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(8px);
+    color: #ffffff;
+    padding: 8px 14px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 500;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.qgis2web-badge-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #10b981;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}

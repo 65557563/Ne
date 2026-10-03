@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BENIN-PEPI — Géoportail Cartographique Complet (Architecture Autonome)</title>
+  
+  <!-- Leaflet CSS & JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --primary: #059669;
+      --primary-dark: #064e3b;
+      --primary-light: #d1fae5;
+      --accent: #f59e0b;
+      --slate-900: #0f172a;
+      --slate-800: #1e293b;
+      --slate-100: #f1f5f9;
+      --border: #e2e8f0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: var(--slate-900);
+      color: #0f172a;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(135deg, #031c12 0%, #064e3b 50%, #031d13 100%);
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid #10b981;
+      height: 60px;
+      z-index: 50;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      box-shadow: 0 4px 10px rgba(16,185,129,0.3);
+    }
+
+    .brand h1 {
+      font-size: 1.15rem;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+    }
+
+    .brand p {
+      font-size: 0.72rem;
+      color: #a7f3d0;
+      font-weight: 500;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .badge-pill {
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .badge-pill strong {
+      color: #34d399;
+    }
+
+    .btn-top {
+      background: #10b981;
+      color: #031c12;
+      font-weight: 800;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn-top:hover {
+      background: #34d399;
+      transform: scale(1.02);
+    }
+
+    /* Main Container */
+    .main-container {
+      display: flex;
+      flex: 1;
+      height: calc(100vh - 60px);
+      position: relative;
+    }
+
+    /* Sidebar */
+    #sidebar {
+      width: 400px;
+      background: #ffffff;
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      z-index: 20;
+      box-shadow: 4px 0 20px rgba(0,0,0,0.08);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .sidebar-header {
+      padding: 16px;
+      background: #f8fafc;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .search-box {
+      position: relative;
+      width: 100%;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 10px 14px 10px 36px;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      background: white;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .search-box input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(16,185,129,0.15);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+      color: #94a3b8;
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 6px;
+    }
+
+    .filter-btn {
+      flex: 1;
+      padding: 7px 10px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      border: 1px solid #cbd5e1;
+      background: white;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: #475569;
+    }
+
+    .filter-btn.active {
+      background: var(--primary-dark);
+      color: white;
+      border-color: var(--primary-dark);
+      box-shadow: 0 2px 6px rgba(6,78,59,0.25);
+    }
+
+    /* Nursery List */
+    #nursery-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px;
+      background: #f8fafc;
+    }
+
+    .nursery-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .nursery-card:hover {
+      border-color: var(--primary);
+      box-shadow: 0 4px 12px rgba(16,185,129,0.12);
+      transform: translateY(-2px);
+    }
+
+    .nursery-card.selected {
+      border-color: var(--primary);
+      background: #f0fdf4;
+      box-shadow: 0 0 0 2px var(--primary);
+    }
+
+    .card-thumb {
+      width: 65px;
+      height: 65px;
+      border-radius: 10px;
+      object-fit: cover;
+      flex-shrink: 0;
+      background: #0f172a;
+    }
+
+    .card-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .card-title {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: #0f172a;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 3px;
+    }
+
+    .card-meta {
+      font-size: 0.72rem;
+      color: #64748b;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .badge-tag {
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      display: inline-block;
+    }
+
+    .badge-ecole {
+      background: #dcfce7;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+    }
+
+    .badge-privee {
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fde68a;
+    }
+
+    /* Map Canvas */
+    #map {
+      flex: 1;
+      height: 100%;
+      background: #0f172a;
+      position: relative;
+    }
+
+    /* Floating Quick Control Bar */
+    .floating-bar {
+      position: absolute;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      padding: 6px 14px;
+      border-radius: 999px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      border: 1px solid rgba(226,232,240,0.8);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .floating-bar button {
+      padding: 5px 12px;
+      border-radius: 999px;
+      border: none;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-action-green {
+      background: #10b981;
+      color: white;
+    }
+    .btn-action-green:hover { background: #059669; }
+
+    .btn-action-amber {
+      background: #f59e0b;
+      color: #0f172a;
+    }
+    .btn-action-amber:hover { background: #d97706; }
+
+    .btn-action-slate {
+      background: #f1f5f9;
+      color: #334155;
+    }
+    .btn-action-slate:hover { background: #e2e8f0; }
+
+    /* Custom Leaflet Marker Icons */
+    .custom-nursery-marker {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      border: 2px solid white;
+      transition: transform 0.2s;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .marker-ecole {
+      background: #059669;
+      color: white;
+    }
+
+    .marker-privee {
+      background: #f59e0b;
+      color: #0f172a;
+    }
+
+    /* Popups */
+    .leaflet-popup-content-wrapper {
+      border-radius: 16px;
+      padding: 0;
+      overflow: hidden;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+    }
+    .leaflet-popup-content {
+      margin: 0;
+      line-height: 1.4;
+      font-size: 12px;
+    }
+
+    .popup-header {
+      position: relative;
+      height: 120px;
+      background: #0f172a;
+      overflow: hidden;
+    }
+    .popup-header img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .popup-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 70%);
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      color: white;
+    }
+    .popup-body {
+      padding: 12px 14px;
+      background: white;
+    }
+    .popup-body h4 {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 4px;
+    }
+    .popup-grid {
+      display: grid;
+      grid-cols: 2;
+      gap: 6px;
+      background: #f8fafc;
+      padding: 8px;
+      border-radius: 10px;
+      margin-top: 8px;
+      font-size: 0.72rem;
+    }
+
+    /* Toast Notification */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9999;
+      background: #064e3b;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      border: 1px solid #10b981;
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: none;
+      animation: fadeIn 0.3s;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 860px) {
+      #sidebar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 320px;
+        transform: translateX(-100%);
+      }
+      #sidebar.open {
+        transform: translateX(0);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. HEADER DU GÉOPORTAIL -->
+  <header>
+    <div class="brand">
+      <div class="brand-icon">🌱</div>
+      <div>
+        <h1>BENIN-PEPI &bull; Géoportail Cartographique</h1>
+        <p>Département du Zou &amp; Commune d'Abomey &bull; Système SIG WGS84</p>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <div class="badge-pill">
+        <span>Sites :</span>
+        <strong id="badge-total">16</strong>
+      </div>
+      <div class="badge-pill" style="display: none;" id="pill-filtered">
+        <span>Filtrés :</span>
+        <strong id="badge-filtered">16</strong>
+      </div>
+      <button class="btn-top" onclick="copyGeoportalLink()">
+        🔗 <span>Copier le lien direct</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- 2. CONTENEUR PRINCIPAL -->
+  <div class="main-container">
+
+    <!-- 2.1 PANNEAU LATÉRAL GAUCHE -->
+    <div id="sidebar">
+      <div class="sidebar-header">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="searchInput" placeholder="Rechercher pépinière, commune, essence..." oninput="handleSearch(this.value)" />
+        </div>
+
+        <div class="filter-tabs">
+          <button class="filter-btn active" onclick="filterType('all', this)">Toutes (16)</button>
+          <button class="filter-btn" onclick="filterType('ecole', this)">Écoles (9)</button>
+          <button class="filter-btn" onclick="filterType('privee', this)">Privées (7)</button>
+        </div>
+      </div>
+
+      <!-- Liste scrollable des sites -->
+      <div id="nursery-list"></div>
+    </div>
+
+    <!-- 2.2 CANVAS CARTOGRAPHIQUE LEAFLET -->
+    <div id="map"></div>
+
+    <!-- 2.3 BARRE FLOTTANTE D'OUTILS ET COUCHES -->
+    <div class="floating-bar">
+      <span>📍 Limite Abomey :</span>
+      <button id="btn-toggle-abomey" class="btn-action-green" onclick="toggleAbomeyLayer()">✓ Affichée</button>
+      <button class="btn-action-amber" onclick="centerAbomey()">🎯 Centrer Abomey</button>
+      <button class="btn-action-slate" onclick="toggleSatellite()">🛰️ Basculer Satellite</button>
+      <button class="btn-action-slate" onclick="toggleZouLayer()">🗺️ Limite Zou</button>
+    </div>
+
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="toast"></div>
+
+  <!-- 3. CODE JAVASCRIPT COMPLET & DONNÉES GÉOGRAPHIQUES DIRECTES -->
+  <script>
+    // --- 3.1 DONNÉES DES 16 PÉPINIÈRES OFFICIELLES DU ZOU / ABOMEY (EPSG:4326) ---
+    const NURSERIES_DATA = [
+      {
+        id: "pepi-01",
+        nom: "Pépinière de l'ENI",
+        type: "ecole",
+        commune: "Abomey",
+        arrondissement: "Vidolè",
+        promoteur: "École Normale d'Instituteurs d'Abomey",
+        telephone: "+229 97 12 34 56",
+        capaciteAnnuelle: 25000,
+        especes: ["Acacia auriculiformis", "Teck (Tectona grandis)", "Manguier greffé", "Eucalyptus"],
+        statut: "actif",
+        photo: "https://images.unsplash.com/photo-1592417817098-8f3d6910985c?auto=format&fit=crop&w=600&q=80",
+        lat: 7.1845,
+        lng: 1.9912
+      },
+      {
+        id: "pepi-02",
+        nom: "Pépinière TEME",
+        type: "privee",
+        commune: "Bohicon",
+        arrondissement: "Bohicon 1",
+        promoteur: "M. Barnabé Agossou (GIE TEME)",
+        telephone: "+229 95 44 88 12",
+        capaciteAnnuelle: 45000,
+        especes: ["Palmier à huile sélectionné", "Anacardier greffé", "Agrumes"],
+        statut: "actif",
+        photo: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=600&q=80",
+        lat: 7.1782,
+        lng: 2.0667
+      },
+      {
+        id: "pepi-03",
+        nom: "Pépinière Agonvidé",
+        type: "privee",
+        commune: "Abomey",
+        arrondissement: "Djègbé",
+        promoteur: "Mme Clarisse Hounsinou",
+        telephone: "+229 96 33 22 11",
+        capaciteAnnuelle: 18000,
+        especes: ["Moringa oleifera", "Gmelina arborea", "Papayer solo", "Flamboyant"],
+        statut: "actif",
+        photo: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80",
+        lat: 7.1950,
+        lng: 1.9820
+      },
+      {
+        id: "pepi-04",
+        nom: "Pépinière Scolaire CEG 1 Abomey",
+        type: "ecole",
+        commune: "Abomey",
+        arrondissement: "Hounli",
+        promoteur: "Club Environnement & Club UNESCO du CEG 1",
+        telephone: "+229 97 00 11 22",
+        capaciteAnnuelle: 12000,
+        especes: ["Teck", "Acacia", "Caïlcédrat (Khaya senegalensis)"],
+        statut: "actif",
+        photo: "https://images.unsplash.com/photo-1516253593875-bd7ba052fbc5?auto=format&fit=crop&w=600&q=80",
+        lat: 7.1890,
+        lng: 1.9985
+      },
+      {
+        id: "pepi-05",
+        nom: "Pépinière Communale de Djidja",
+        type: "ecole",
+        commune: "Djidja",
+        arrondissement: "Djidja-Centre",
+        promoteur: "Mairie de Djidja / Eaux et Forêts",
+        telephone: "+229 94 55 66 77",
+        capaciteAnnuelle: 60000,
+        especes: ["Anacardier", "Khaya senegalensis", "Néré", "Karité"],
+        statut: "actif",
+        photo: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?auto=format&fit=crop&w=600&q=80",
+        lat: 7.3450,
+        lng: 1.9320
+      },
+      {
+        id: "pepi-06",
+        nom: "Pépinière Agro-Forestière de Za-Kpota",
+        type: "privee",
+        commune: "Za-Kpota",
+        arrondissement: "Za-Tanta",
+        promoteur: "Coopérative des Planteurs du Zou",
+        telephone: "+229 95 12 89 40",
+        capaciteAnnuelle: 35000,
+        especes: ["Teck", "Acacia auriculiformis", "Bambou de Chine"],
+        statut: "actif",
+        photo: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=600&q=80",
+        lat: 7.2340,
+        lng: 2.2150
+      },
+      {
+        id: "pepi-07",
+        nom: "Pépinière Scolaire Lycée Houffon",
+        type: "ecole",
+        commune: "Abomey",
+        arrondissement: "Agbokpa",
+        promoteur: "Association des Parents d'Élèves & Club Vert",
+        telephone: "+229 97 88 77 66",
+        capaciteAnnuelle: 15000,
+        especes: ["Manguier Kent", "Avocatier", "Goyavier", "Acacia"],
+        statut: "actif",
+        photo: "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=600&q=80",
+        lat: 7.1720,
+        lng: 1.9750
+      },
+      {
+        id: "pepi-08",
+        nom: "Pépinière Bio-Zou Zogbodomey",
+        type: "privee",
+        commune: "Zogbodomey",
+        arrondissement: "Cana",
+        promoteur: "GIE Semences Vertes du Zou",
+        telephone: "+229 96 11 44 55",
+        capaciteAnnuelle: 50000,
+        especes: ["Palmier à huile sélectionné", "Anacardier", "Oranger"],
+        statut: "actif",
+        photo: "https://images.unsplash.com/photo-1592417817098-8f3d6910985c?auto=format&fit=crop&w=600&q=80",
+        lat: 7.1050,
+        lng: 2.0950
+      },
+      {
+        id: "pepi-09",
+        nom: "Pépinière Reine Tassi Hangbé",
+        type: "ecole",
+        commune: "Abomey",
+        arrondissement: "Détokpo",
+        promoteur: "Collectif des Femmes Pépiniéristes d'Abomey",
+        telephone: "+229 97 45 23 10",
+        capaciteAnnuelle: 20000,
+        especes: ["Plantes médicinales", "Moringa", "Baobab nain", "Neem"],
+        statut: "actif",
+        photo: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80",
+        lat: 7.1995,
+        lng: 2.0040
+      },
+      {
+        id: "pepi-10",
+        nom: "Pépinière Forestière de Covè",
+        type: "privee",
+        commune: "Covè",
+        arrondissement: "Houen-Hounso",
+        promoteur: "M. Pascal Dossou",
+        telephone: "+229 95 67 89 01",
+        capaciteAnnuelle: 30000,
+        especes: ["Teck", "Iroko (Milicia excelsa)", "Acacia auriculiformis"],
+        statut: "actif",
+        photo: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=600&q=80",
+        lat: 7.2180,
+        lng: 2.3420
+      },
+      {
+        id: "pepi-11",
+        nom: "Pépinière Scolaire EPP Sèhoun",
+        type: "ecole",
+        commune: "Abomey",
+        arrondissement: "Sèhoun",
+        promoteur: "Direction EPP Sèhoun & Eaux et Forêts",
+        telephone: "+229 94 33 22 11",
+        capaciteAnnuelle: 8000,
+        especes: ["Teck", "Manguier", "Gmelina arborea"],
+        statut: "actif",
+        photo: "https://images.unsplash.com/photo-1516253593875-bd7ba052fbc5?auto=format&fit=crop&w=600&q=80",
+        lat: 7.1650,
+        lng: 1.9540
+      },
+      {
+        id: "pepi-12",
+        nom: "Pépinière Agro-Écologique de Zagnanado",
+        type: "privee",
+        commune: "Zagnanado",
+        arrondissement: "Banamè",
+        promoteur: "ONG Terre Vivante Bénin",
+        telephone: "+229 96 78 90 12",
+        capaciteAnnuelle: 40000,
+        especes: ["Anacardier", "Néré", "Gmelina", "Citronnier"],
+        statut: "actif",
+        photo: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?auto=format&fit=crop&w=600&q=80",
+        lat: 7.2750,
+        lng: 2.3850
+      },
+      {
+        id: "pepi-13",
+        nom: "Pépinière Pilote d'Agbangnizoun",
+        type: "ecole",
+        commune: "Agbangnizoun",
+        arrondissement: "Agbangnizoun-Centre",
+        promoteur: "CEG Agbangnizoun & Mairie",
+        telephone: "+229 97 11 55 99",
+        capaciteAnnuelle: 16000,
+        especes: ["Acacia", "Teck", "Palmier à huile"],
+        statut: "actif",
+        photo: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=600&q=80",
+        lat: 7.0850,
+        lng: 1.9680
+      },
+      {
+        id: "pepi-14",
+        nom: "Pépinière de Goho (Place Historique)",
+        type: "ecole",
+        commune: "Abomey",
+        arrondissement: "Hounli",
+        promoteur: "Direction du Tourisme et du Patrimoine",
+        telephone: "+229 95 22 44 66",
+        capaciteAnnuelle: 10000,
+        especes: ["Arbres d'ombrage royaux", "Flamboyant", "Ficus", "Fromager"],
+        statut: "actif",
+        photo: "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=600&q=80",
+        lat: 7.1810,
+        lng: 2.0120
+      },
+      {
+        id: "pepi-15",
+        nom: "Pépinière Ouinhi Forêt-Verte",
+        type: "privee",
+        commune: "Ouinhi",
+        arrondissement: "Dasso",
+        promoteur: "M. Sylvain Koudogbo",
+        telephone: "+229 96 44 77 88",
+        capaciteAnnuelle: 28000,
+        especes: ["Teck", "Acacia", "Rônier (Borassus aethiopum)"],
+        statut: "actif",
+        photo: "https://images.unsplash.com/photo-1592417817098-8f3d6910985c?auto=format&fit=crop&w=600&q=80",
+        lat: 7.0120,
+        lng: 2.4550
+      },
+      {
+        id: "pepi-16",
+        nom: "Pépinière Scolaire CEG Bohicon 2",
+        type: "ecole",
+        commune: "Bohicon",
+        arrondissement: "Bohicon 2",
+        promoteur: "Club Écologique CEG 2 Bohicon",
+        telephone: "+229 97 66 55 44",
+        capaciteAnnuelle: 14000,
+        especes: ["Manguier", "Gmelina", "Eucalyptus"],
+        statut: "actif",
+        photo: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80",
+        lat: 7.1690,
+        lng: 2.0780
+      }
+    ];
+
+    // --- 3.2 POLYGONES VECTORIELS D'ABOMEY ET DU DÉPARTEMENT DU ZOU ---
+    const ABOMEY_POLYGON = [
+      [7.2100, 1.9450],
+      [7.2350, 1.9750],
+      [7.2200, 2.0100],
+      [7.1950, 2.0350],
+      [7.1600, 2.0400],
+      [7.1350, 2.0150],
+      [7.1400, 1.9800],
+      [7.1650, 1.9500],
+      [7.1900, 1.9400],
+      [7.2100, 1.9450]
+    ];
+
+    const ZOU_POLYGON = [
+      [7.5500, 1.8500],
+      [7.6200, 2.0200],
+      [7.5800, 2.2500],
+      [7.4200, 2.4500],
+      [7.2200, 2.5200],
+      [7.0200, 2.4800],
+      [6.8800, 2.3500],
+      [6.8500, 2.1500],
+      [6.9200, 1.9500],
+      [7.1500, 1.7800],
+      [7.3500, 1.7600],
+      [7.5500, 1.8500]
+    ];
+
+    // --- 3.3 INITIALISATION DE LA CARTE LEAFLET ---
+    const map = L.map('map', {
+      center: [7.1845, 1.9912],
+      zoom: 12,
+      zoomControl: true
+    });
+
+    // Fonds de cartes : OpenStreetMap & Satellite ESRI
+    const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap contributors &bull; BENIN-PEPI'
+    }).addTo(map);
+
+    const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+      maxZoom: 19,
+      attribution: 'Tiles &copy; Esri &bull; Earthstar Geographics'
+    });
+
+    let isSatellite = false;
+    function toggleSatellite() {
+      if (isSatellite) {
+        map.removeLayer(satelliteLayer);
+        map.addLayer(osmLayer);
+        isSatellite = false;
+        showToast("Fond de carte : OpenStreetMap standard activé");
+      } else {
+        map.removeLayer(osmLayer);
+        map.addLayer(satelliteLayer);
+        isSatellite = true;
+        showToast("Fond de carte : Imagerie Satellite ESRI activée");
+      }
+    }
+
+    // Couches vectorielles de limites administratives
+    const abomeyGeoLayer = L.polygon(ABOMEY_POLYGON, {
+      color: '#10b981',
+      weight: 3,
+      fillColor: '#10b981',
+      fillOpacity: 0.12,
+      dashArray: '5, 5'
+    }).addTo(map);
+
+    abomeyGeoLayer.bindTooltip("<b>Commune d'Abomey</b><br>Zone pilote pépinières", { sticky: true });
+
+    const zouGeoLayer = L.polygon(ZOU_POLYGON, {
+      color: '#3b82f6',
+      weight: 2,
+      fillColor: '#3b82f6',
+      fillOpacity: 0.05,
+      dashArray: '8, 8'
+    }).addTo(map);
+
+    zouGeoLayer.bindTooltip("<b>Département du Zou</b><br>Zone globale d'intervention", { sticky: true });
+
+    let showAbomey = true;
+    function toggleAbomeyLayer() {
+      const btn = document.getElementById('btn-toggle-abomey');
+      if (showAbomey) {
+        map.removeLayer(abomeyGeoLayer);
+        showAbomey = false;
+        btn.textContent = "○ Masquée";
+        btn.className = "btn-action-slate";
+        showToast("Limite communale d'Abomey masquée");
+      } else {
+        map.addLayer(abomeyGeoLayer);
+        showAbomey = true;
+        btn.textContent = "✓ Affichée";
+        btn.className = "btn-action-green";
+        showToast("Limite communale d'Abomey affichée");
+      }
+    }
+
+    let showZou = true;
+    function toggleZouLayer() {
+      if (showZou) {
+        map.removeLayer(zouGeoLayer);
+        showZou = false;
+        showToast("Limite du Département du Zou masquée");
+      } else {
+        map.addLayer(zouGeoLayer);
+        showZou = true;
+        showToast("Limite du Département du Zou affichée");
+      }
+    }
+
+    function centerAbomey() {
+      map.flyToBounds(abomeyGeoLayer.getBounds(), { padding: [40, 40], duration: 1.2 });
+      showToast("Centrage effectué sur la commune d'Abomey");
+    }
+
+    // --- 3.4 GESTION DES MARQUEURS ET DES POPUPS ---
+    const markersLayerGroup = L.layerGroup().addTo(map);
+    const markersMap = new Map();
+
+    function createMarkerIcon(type) {
+      const isEcole = type === 'ecole';
+      const className = isEcole ? 'custom-nursery-marker marker-ecole' : 'custom-nursery-marker marker-privee';
+      const symbol = isEcole ? '🏫' : '🌿';
+
+      return L.divIcon({
+        className: 'clean-div-icon',
+        html: `<div class="${className}" style="width: 32px; height: 32px;">${symbol}</div>`,
+        iconSize: [32, 32],
+        iconAnchor: [16, 16],
+        popupAnchor: [0, -18]
+      });
+    }
+
+    function buildPopupHtml(n) {
+      const isEcole = n.type === 'ecole';
+      const badgeClass = isEcole ? 'badge-ecole' : 'badge-privee';
+      const badgeLabel = isEcole ? 'Pépinière École' : 'Pépinière Privée';
+
+      return `
+        <div style="width: 270px; font-family: inherit;">
+          <div class="popup-header">
+            <img src="${n.photo}" alt="${n.nom}" onerror="this.src='https://images.unsplash.com/photo-1592417817098-8f3d6910985c?auto=format&fit=crop&w=600&q=80'" />
+            <div class="popup-overlay">
+              <span class="badge-tag ${badgeClass}" style="align-self: flex-start; margin-bottom: 4px;">${badgeLabel}</span>
+              <strong style="font-size: 0.95rem; text-shadow: 0 1px 3px rgba(0,0,0,0.8);">${n.nom}</strong>
+            </div>
+          </div>
+          <div class="popup-body">
+            <div style="font-size: 0.75rem; color: #047857; font-weight: 700;">📍 ${n.commune} &bull; ${n.arrondissement}</div>
+            <div style="font-size: 0.75rem; color: #475569; margin: 4px 0;"><strong>Promoteur :</strong> ${n.promoteur}</div>
+            
+            <div class="popup-grid">
+              <div><strong>Capacité :</strong> ${n.capaciteAnnuelle.toLocaleString()} plants/an</div>
+              <div><strong>Statut :</strong> ${n.statut === 'actif' ? 'En activité' : 'Saisonnier'}</div>
+              <div style="grid-column: span 2;"><strong>Essences :</strong> ${n.especes.slice(0, 3).join(', ')}</div>
+            </div>
+
+            <div style="margin-top: 8px; font-size: 0.72rem; color: #64748b;">
+              📞 <a href="tel:${n.telephone}" style="color: #059669; font-weight: bold; text-decoration: none;">${n.telephone}</a>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // --- 3.5 RENDU ET FILTRAGE DYNAMIQUE ---
+    let currentFiltered = [...NURSERIES_DATA];
+    let activeType = 'all';
+    let searchQuery = '';
+
+    function renderNurseries() {
+      // 1. Filtrer
+      currentFiltered = NURSERIES_DATA.filter(n => {
+        const matchType = activeType === 'all' || n.type === activeType;
+        const q = searchQuery.toLowerCase().trim();
+        const matchSearch = !q || 
+          n.nom.toLowerCase().includes(q) || 
+          n.commune.toLowerCase().includes(q) || 
+          n.arrondissement.toLowerCase().includes(q) || 
+          n.promoteur.toLowerCase().includes(q) ||
+          n.especes.some(e => e.toLowerCase().includes(q));
+        
+        return matchType && matchSearch;
+      });
+
+      // 2. Mettre à jour les compteurs
+      document.getElementById('badge-total').textContent = NURSERIES_DATA.length;
+      const pillFiltered = document.getElementById('pill-filtered');
+      if (currentFiltered.length !== NURSERIES_DATA.length) {
+        pillFiltered.style.display = 'flex';
+        document.getElementById('badge-filtered').textContent = currentFiltered.length;
+      } else {
+        pillFiltered.style.display = 'none';
+      }
+
+      // 3. Mettre à jour la carte
+      markersLayerGroup.clearLayers();
+      markersMap.clear();
+
+      currentFiltered.forEach(n => {
+        const marker = L.marker([n.lat, n.lng], {
+          icon: createMarkerIcon(n.type)
+        });
+
+        marker.bindPopup(buildPopupHtml(n));
+        marker.bindTooltip(`<b>${n.nom}</b><br>${n.commune}`, { direction: 'top', offset: [0, -14] });
+        
+        marker.addTo(markersLayerGroup);
+        markersMap.set(n.id, marker);
+      });
+
+      // 4. Mettre à jour la liste latérale
+      const listContainer = document.getElementById('nursery-list');
+      if (currentFiltered.length === 0) {
+        listContainer.innerHTML = `
+          <div style="text-align: center; padding: 40px 10px; color: #64748b;">
+            <div style="font-size: 32px; margin-bottom: 8px;">🔍</div>
+            <p style="font-weight: 700; font-size: 0.9rem;">Aucun site trouvé</p>
+            <p style="font-size: 0.75rem;">Modifiez vos critères de recherche ou de filtre.</p>
+          </div>
+        `;
+        return;
+      }
+
+      listContainer.innerHTML = currentFiltered.map(n => {
+        const isEcole = n.type === 'ecole';
+        const badgeClass = isEcole ? 'badge-ecole' : 'badge-privee';
+        const badgeLabel = isEcole ? 'École' : 'Privée';
+
+        return `
+          <div class="nursery-card" id="card-${n.id}" onclick="selectNursery('${n.id}')">
+            <img class="card-thumb" src="${n.photo}" alt="${n.nom}" onerror="this.src='https://images.unsplash.com/photo-1592417817098-8f3d6910985c?auto=format&fit=crop&w=600&q=80'" />
+            <div class="card-info">
+              <div class="card-title">${n.nom}</div>
+              <div class="card-meta">📍 ${n.commune} &bull; ${n.arrondissement}</div>
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span class="badge-tag ${badgeClass}">${badgeLabel}</span>
+                <span style="font-size: 0.7rem; font-weight: bold; color: #047857;">${n.capaciteAnnuelle.toLocaleString()} plants</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function selectNursery(id) {
+      const n = NURSERIES_DATA.find(item => item.id === id);
+      if (!n) return;
+
+      // Highlight card in list
+      document.querySelectorAll('.nursery-card').forEach(el => el.classList.remove('selected'));
+      const activeCard = document.getElementById(`card-${id}`);
+      if (activeCard) {
+        activeCard.classList.add('selected');
+        activeCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+
+      // Zoom & Open Popup on map
+      const marker = markersMap.get(id);
+      if (marker) {
+        map.flyTo([n.lat, n.lng], 15, { duration: 1 });
+        setTimeout(() => marker.openPopup(), 900);
+      }
+    }
+
+    function handleSearch(val) {
+      searchQuery = val;
+      renderNurseries();
+    }
+
+    function filterType(type, btn) {
+      activeType = type;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderNurseries();
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.style.display = 'block';
+      setTimeout(() => { t.style.display = 'none'; }, 3500);
+    }
+
+    function copyGeoportalLink() {
+      const url = window.location.href;
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(url);
+      }
+      showToast("Lien du géoportail copié dans le presse-papiers !");
+    }
+
+    // Démarrage initial
+    renderNurseries();
+  </script>
+</body>
+</html>

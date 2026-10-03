@@ -1,0 +1,481 @@
+{
+  "type": "FeatureCollection",
+  "name": "PEPI_BENIN",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "pepi-01",
+        "nom": "Pépinière de l'ENI",
+        "type": "ecole",
+        "commune": "Abomey",
+        "arrondissement": "Vidolè",
+        "promoteur": "École Normale d'Instituteurs d'Abomey",
+        "telephone": "+229 97 12 34 56",
+        "email": "eni.abomey@education.gouv.bj",
+        "description": "Pépinière pédagogique de l'ENI Abomey dédiée à la formation pratique des élèves-maîtres aux techniques sylvicoles et reboisement scolaire.",
+        "capaciteAnnuelle": 25000,
+        "especes": [
+          "Acacia auriculiformis",
+          "Teck (Tectona grandis)",
+          "Manguier greffé",
+          "Eucalyptus"
+        ],
+        "statut": "actif",
+        "photoUrl": "/assets/pepinieres/pepi_01.jpg",
+        "dateCreation": "2021-04-15",
+        "superficieM2": 1200,
+        "systemeArrosage": "Forage avec pompe solaire",
+        "latitude": 7.1845,
+        "longitude": 1.9912,
+        "crs_epsg": "EPSG:4326 (WGS84)",
+        "date_export": "2026-09-29T09:38:21.044Z",
+        "treeIcon": "ecole",
+        "icone_arbre": "ecole"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.9912,
+          7.1845
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "pepi-02",
+        "nom": "Pépinière TEME",
+        "type": "privee",
+        "commune": "Bohicon",
+        "arrondissement": "Bohicon 1",
+        "promoteur": "M. Barnabé Agossou (GIE TEME)",
+        "telephone": "+229 95 44 88 12",
+        "email": "contact@teme-benin.org",
+        "description": "Exploitation privée d'agroforesterie spécialisée dans la multiplication d'arbres fruitiers tropicaux greffés et bois d'œuvre.",
+        "capaciteAnnuelle": 45000,
+        "especes": [
+          "Manguier greffé",
+          "Agrumes (Oranger, Citronnier)",
+          "Palmier à huile",
+          "Anacardier"
+        ],
+        "statut": "actif",
+        "photoUrl": "/assets/pepinieres/pepi_02.jpg",
+        "dateCreation": "2018-06-10",
+        "superficieM2": 2500,
+        "systemeArrosage": "Goutte-à-goutte",
+        "latitude": 7.1782,
+        "longitude": 2.0678,
+        "crs_epsg": "EPSG:4326 (WGS84)",
+        "date_export": "2026-09-29T09:38:21.044Z",
+        "treeIcon": "fruitier",
+        "icone_arbre": "fruitier"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.0678,
+          7.1782
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "pepi-03",
+        "nom": "Pépinière de Tchanou",
+        "type": "ecole",
+        "commune": "Bantè",
+        "arrondissement": "Bantè Centre",
+        "promoteur": "Club Environnement CEG Tchanou",
+        "telephone": "+229 96 33 21 00",
+        "email": "",
+        "description": "Projet d'éco-citoyenneté des élèves de collège pour la lutte contre la désertification et l'embellissement des espaces scolaires.",
+        "capaciteAnnuelle": 15000,
+        "especes": [
+          "Baobab",
+          "Khaya senegalensis (Caïlcédrat)",
+          "Teck",
+          "Moringa"
+        ],
+        "statut": "actif",
+        "photoUrl": "/assets/pepinieres/pepi_03.jpg",
+        "dateCreation": "2022-10-05",
+        "superficieM2": 800,
+        "systemeArrosage": "Puits à motopompe",
+        "latitude": 7.421,
+        "longitude": 1.8845,
+        "crs_epsg": "EPSG:4326 (WGS84)",
+        "date_export": "2026-09-29T09:38:21.044Z",
+        "treeIcon": "baobab",
+        "icone_arbre": "baobab"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.8845,
+          7.421
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "pepi-04",
+        "nom": "Pépinière Agonvidé",
+        "type": "privee",
+        "commune": "Abomey",
+        "arrondissement": "Djègbé",
+        "promoteur": "Mme Pascaline Dossou",
+        "telephone": "+229 97 88 55 22",
+        "email": "agonvide.pepi@gmail.com",
+        "description": "Pépinière horticole et forestière fournissant les riverains et les collectivités locales pour la végétalisation urbaine d'Abomey.",
+        "capaciteAnnuelle": 20000,
+        "especes": [
+          "Flamboyant",
+          "Acacia",
+          "Goyavier",
+          "Corossolier",
+          "Ficus"
+        ],
+        "statut": "actif",
+        "photoUrl": "/assets/pepinieres/pepi_04.jpg",
+        "dateCreation": "2020-03-12",
+        "superficieM2": 950,
+        "systemeArrosage": "Raccordement SONEB & cuve",
+        "latitude": 7.172,
+        "longitude": 1.982,
+        "crs_epsg": "EPSG:4326 (WGS84)",
+        "date_export": "2026-09-29T09:38:21.044Z",
+        "treeIcon": "fruitier",
+        "icone_arbre": "fruitier"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.982,
+          7.172
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "pepi-05",
+        "nom": "Pépinière Sègbé",
+        "type": "ecole",
+        "commune": "Abomey",
+        "arrondissement": "Sèhoun",
+        "promoteur": "École Primaire Publique Sègbé",
+        "telephone": "+229 61 70 80 90",
+        "email": "",
+        "description": "Initiative communautaire scolaire intégrant les parents d'élèves pour reboiser la cour de récréation et créer un verger scolaire.",
+        "capaciteAnnuelle": 8000,
+        "especes": [
+          "Papayer solo",
+          "Manguier",
+          "Acacia",
+          "Citronnelle"
+        ],
+        "statut": "actif",
+        "photoUrl": "/assets/pepinieres/pepi_05.jpg",
+        "dateCreation": "2023-01-20",
+        "superficieM2": 600,
+        "systemeArrosage": "Manuel",
+        "latitude": 7.158,
+        "longitude": 1.965,
+        "crs_epsg": "EPSG:4326 (WGS84)",
+        "date_export": "2026-09-29T09:38:21.044Z",
+        "treeIcon": "acacia",
+        "icone_arbre": "acacia"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.965,
+          7.158
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "pepi-06",
+        "nom": "Pépinière Forestière CEG 1 Bohicon",
+        "type": "ecole",
+        "commune": "Bohicon",
+        "arrondissement": "Bohicon 2",
+        "promoteur": "Club Vert CEG 1",
+        "telephone": "+229 97 45 10 20",
+        "email": "",
+        "description": "Grande pépinière scolaire établie en partenariat avec l'Inspection Forestière du Zou pour la distribution de plants aux écoles.",
+        "capaciteAnnuelle": 35000,
+        "especes": [
+          "Teck (Tectona grandis)",
+          "Khaya senegalensis",
+          "Acacia auriculiformis",
+          "Gmelina arborea"
+        ],
+        "statut": "actif",
+        "photoUrl": "/assets/pepinieres/pepi_06.jpg",
+        "dateCreation": "2019-11-10",
+        "superficieM2": 1800,
+        "systemeArrosage": "Forage",
+        "latitude": 7.202,
+        "longitude": 2.059,
+        "crs_epsg": "EPSG:4326 (WGS84)",
+        "date_export": "2026-09-29T09:38:21.044Z",
+        "treeIcon": "teck",
+        "icone_arbre": "teck"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.059,
+          7.202
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "pepi-07",
+        "nom": "Pépinière Privée Bio-Vert Dako",
+        "type": "privee",
+        "commune": "Abomey",
+        "arrondissement": "Hounli",
+        "promoteur": "M. Sylvestre Dako",
+        "telephone": "+229 96 11 22 33",
+        "email": "",
+        "description": "Production de plants maraîchers et d'arbres à forte valeur ajoutée économique pour les planteurs du plateau d'Abomey.",
+        "capaciteAnnuelle": 30000,
+        "especes": [
+          "Anacardier",
+          "Palmier à huile amélioré",
+          "Manguier Kent",
+          "Avocatier"
+        ],
+        "statut": "actif",
+        "photoUrl": "/assets/pepinieres/pepi_07.jpg",
+        "dateCreation": "2017-09-01",
+        "superficieM2": 1500,
+        "systemeArrosage": "Puits tubé avec surpresseur",
+        "latitude": 7.199,
+        "longitude": 2.008,
+        "crs_epsg": "EPSG:4326 (WGS84)",
+        "date_export": "2026-09-29T09:38:21.044Z",
+        "treeIcon": "palmier",
+        "icone_arbre": "palmier"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.008,
+          7.199
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "pepi-08",
+        "nom": "Pépinière Écologique de Covè",
+        "type": "privee",
+        "commune": "Covè",
+        "arrondissement": "Covè Centre",
+        "promoteur": "Coopérative des Pépiniéristes du Zou-Est",
+        "telephone": "+229 97 60 70 80",
+        "email": "",
+        "description": "Spécialisée dans la restauration des berges du fleuve Ouémé et la fourniture de bois d'énergie.",
+        "capaciteAnnuelle": 40000,
+        "especes": [
+          "Bambou géant",
+          "Acacia",
+          "Teck",
+          "Rônier"
+        ],
+        "statut": "actif",
+        "photoUrl": "/assets/pepinieres/pepi_08.jpg",
+        "dateCreation": "2020-07-22",
+        "superficieM2": 2200,
+        "systemeArrosage": "Pompage fleuve",
+        "latitude": 7.221,
+        "longitude": 2.341,
+        "crs_epsg": "EPSG:4326 (WGS84)",
+        "date_export": "2026-09-29T09:38:21.044Z",
+        "treeIcon": "acacia",
+        "icone_arbre": "acacia"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.341,
+          7.221
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "pepi-09",
+        "nom": "Pépinière Oasis Verte Djidja",
+        "type": "privee",
+        "commune": "Djidja",
+        "arrondissement": "Djidja Centre",
+        "promoteur": "GIE Agro-Pastorale Zou",
+        "telephone": "+229 94 00 11 22",
+        "email": "",
+        "description": "Grande station de pépinière pour plantations agroforestières et brise-vents au nord d'Abomey.",
+        "capaciteAnnuelle": 50000,
+        "especes": [
+          "Anacardier",
+          "Teck",
+          "Moringa",
+          "Néré"
+        ],
+        "statut": "actif",
+        "photoUrl": "/assets/pepinieres/pepi_09.jpg",
+        "dateCreation": "2019-02-14",
+        "superficieM2": 3200,
+        "systemeArrosage": "Retenue d eau collinaire",
+        "latitude": 7.345,
+        "longitude": 1.932,
+        "crs_epsg": "EPSG:4326 (WGS84)",
+        "date_export": "2026-09-29T09:38:21.044Z",
+        "treeIcon": "baobab",
+        "icone_arbre": "baobab"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.932,
+          7.345
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "pepi-10",
+        "nom": "Pépinière Scolaire CEG Agbangnizoun",
+        "type": "ecole",
+        "commune": "Agbangnizoun",
+        "arrondissement": "Agbangnizoun Centre",
+        "promoteur": "Collège d'Enseignement Général Agbangnizoun",
+        "telephone": "+229 95 12 78 90",
+        "email": "",
+        "description": "Pépinière entretenue par les élèves du club UNESCO pour reboiser les pistes rurales et sentiers scolaires.",
+        "capaciteAnnuelle": 12000,
+        "especes": [
+          "Acacia",
+          "Teck",
+          "Manguier",
+          "Gmelina"
+        ],
+        "statut": "actif",
+        "photoUrl": "/assets/pepinieres/pepi_10.jpg",
+        "dateCreation": "2022-03-01",
+        "superficieM2": 750,
+        "systemeArrosage": "Puits",
+        "latitude": 7.085,
+        "longitude": 1.961,
+        "crs_epsg": "EPSG:4326 (WGS84)",
+        "date_export": "2026-09-29T09:38:21.044Z",
+        "treeIcon": "teck",
+        "icone_arbre": "teck"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.961,
+          7.085
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "pepi-11",
+        "nom": "Pépinière Reforest Zagnanado",
+        "type": "privee",
+        "commune": "Zagnanado",
+        "arrondissement": "Zagnanado",
+        "promoteur": "Association Terre Fertile",
+        "telephone": "+229 97 34 56 78",
+        "email": "",
+        "description": "Production d'arbres mellifères et d'arbres d'ombrage pour vergers apicoles.",
+        "capaciteAnnuelle": 18000,
+        "especes": [
+          "Moringa",
+          "Acacia auriculiformis",
+          "Eucalyptus",
+          "Baobab"
+        ],
+        "statut": "actif",
+        "photoUrl": "/assets/pepinieres/pepi_01.jpg",
+        "dateCreation": "2021-08-19",
+        "superficieM2": 1100,
+        "systemeArrosage": "Manuel & arrosage localisé",
+        "latitude": 7.265,
+        "longitude": 2.415,
+        "crs_epsg": "EPSG:4326 (WGS84)",
+        "date_export": "2026-09-29T09:38:21.045Z",
+        "treeIcon": "palmier",
+        "icone_arbre": "palmier"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.415,
+          7.265
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "pepi-12",
+        "nom": "Pépinière Verte de Za-Kpota",
+        "type": "ecole",
+        "commune": "Za-Kpota",
+        "arrondissement": "Za-Kpota Centre",
+        "promoteur": "Inspection Pédagogique Za-Kpota",
+        "telephone": "+229 96 78 12 34",
+        "email": "",
+        "description": "Sensibilisation pratique des écoliers aux changements climatiques et protection des sols.",
+        "capaciteAnnuelle": 14000,
+        "especes": [
+          "Teck",
+          "Acacia",
+          "Néré",
+          "Tamarinier"
+        ],
+        "statut": "en_creation",
+        "photoUrl": "/assets/pepinieres/pepi_02.jpg",
+        "dateCreation": "2024-02-10",
+        "superficieM2": 850,
+        "systemeArrosage": "Citerne d'eau de pluie",
+        "latitude": 7.238,
+        "longitude": 2.215,
+        "crs_epsg": "EPSG:4326 (WGS84)",
+        "date_export": "2026-09-29T09:38:21.045Z",
+        "treeIcon": "jeune_plant",
+        "icone_arbre": "jeune_plant"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.215,
+          7.238
+        ]
+      }
+    }
+  ]
+}

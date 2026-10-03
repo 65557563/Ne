@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+/* Leaflet Customizations for BENIN-PEPI */
+.leaflet-popup-content-wrapper {
+  padding: 0 !important;
+  border-radius: 1rem !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.25), 0 8px 10px -6px rgba(0, 0, 0, 0.2) !important;
+  overflow: hidden;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+}
+
+.leaflet-popup-content {
+  margin: 0 !important;
+  line-height: inherit !important;
+}
+
+.leaflet-container {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
+}
+
+.custom-tree-pin-marker {
+  background: transparent;
+  border: none;
+}
+
+.leaflet-custom-tooltip {
+  background-color: rgba(15, 23, 42, 0.9) !important;
+  color: #fff !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 0.5rem !important;
+  padding: 4px 8px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+}
+
+.leaflet-custom-tooltip::before {
+  border-top-color: rgba(15, 23, 42, 0.9) !important;
+}
